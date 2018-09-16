@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
 import inflect 
 
+
 YEAR = 2015 
 positionHeaders = {}
 
@@ -134,7 +135,7 @@ def ExtractPlayersData(player, playerPosition, playerLink):
         playerData = playerData + '\'' + str(count) + '\'' 
         for each in eachTD.findAll('td'):
             playerData = playerData + ',' + '\'' + ClearSpecialCharacters(each.text) + '\''
-            
+
         playerData = '(' + playerData + '), \n'
         fileToWrite.write(playerData)
 
