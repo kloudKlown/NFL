@@ -4,6 +4,7 @@ import time
 import subprocess
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
+import inflect 
 
 YEAR = 2015 
 positionHeaders = {}
@@ -11,13 +12,13 @@ positionHeaders = {}
 
 
 def ClearSpecialCharacters(data):
-    data = re.sub('[^a-zA-Z0-9 \n\.]', '', data)
+    data = re.sub('[^a-zA-Z0-9 \n\.\s]', '', data)
     return data
 
 
 # Extract team urls and names
 def ExtractTeams():
-    teamData = subprocess.check_output(['curl' , 'https://www.pro-football-reference.com/teams/'], shell = True)
+    teamData = subprocess.check_output(['curl https://www.pro-football-reference.com/teams/'], shell = True)
     soup = BeautifulSoup(teamData[10000:], features='html.parser')
     teamDiv = soup.find('div', {'id': 'div_teams_active' })
     teams =  teamDiv.findAll('a')
@@ -26,13 +27,11 @@ def ExtractTeams():
             print(each['href'])
             ExtractPlayersFromRoster(each['href'], each.text)
 
-
-
 # Extract Players from team Roster
 def ExtractPlayersFromRoster(teamURL, teamName):
     teamURL = 'https://www.pro-football-reference.com' + teamURL + str(YEAR) + '_roster.htm' 
     print(teamURL)
-    teamRoster = subprocess.check_output(['curl' , teamURL], shell = True)
+    teamRoster = subprocess.check_output(['curl ' + teamURL], shell = True)
     soup = BeautifulSoup(teamRoster[10000:], features='html.parser')
     teamDiv = soup.find('div', {'id': 'div_starters' })
     teamPlayers = teamDiv.findAll('tr', {'class': 'full_table'})
@@ -60,7 +59,7 @@ def ExtractPlayersFromRoster(teamURL, teamName):
 def ExtractPlayersData(player, playerPosition, playerLink):
     playerLink = playerLink.split('.')[0]
     playerGameLog = 'https://www.pro-football-reference.com' + playerLink + '/gamelog/2015/'
-    playerGameLog = subprocess.check_output(['curl' , playerGameLog], shell = True)
+    playerGameLog = subprocess.check_output(['curl ' + playerGameLog], shell = True)
     soup = BeautifulSoup(playerGameLog[10000:], features='html.parser')
     playerGameLogData = soup.find('div', {'id': 'div_stats'}) 
 
@@ -70,6 +69,7 @@ def ExtractPlayersData(player, playerPosition, playerLink):
     # Header information for the tables    
     playerGameLogDataHeader = playerGameLogData.find('thead')
     header = {}
+    p = inflect.engine()
 
     # Header Titles
     if (len(playerGameLogDataHeader.findAll('tr')) > 0):
@@ -80,23 +80,24 @@ def ExtractPlayersData(player, playerPosition, playerLink):
                     headerName = eachHeader.text
                     
                 else:
-                    length = str(len(header) + 1)
+                    length = p.number_to_words(len(header) + 1)
                     headerName = length
 
                 header[headerName] = 0
                 if ('colspan' in str(eachHeader)):
                         colSpan = colSpan + int(eachHeader['colspan'])
                         header[headerName] = colSpan
-
+    
     # Header Main
     headerMain = []
-    if (len(playerGameLogDataHeader.findAll('tr')) > 1):       
+    if (len(playerGameLogDataHeader.findAll('tr')) > 1):
         for eachHeader in (playerGameLogDataHeader.findAll('tr')[1]).findAll('th'):
                 headerName = ""
                 if (len(str(eachHeader.text)) > 0):
                     headerName = eachHeader.text
                 else:
-                    length = str(len(header) + 1)
+                    length = p.number_to_words(len(header) + 1)
+                    # input(length)
                     headerName = length
 
                 ### Clear Special charcters
@@ -114,37 +115,32 @@ def ExtractPlayersData(player, playerPosition, playerLink):
 
     # Combine headers
     for i in range(0, len(headerMain)):
-        headerMain[i] = '`' + str((FindKey(header, i))) + headerMain[i] + '`'
+        headerMain[i] = '\'' + str((FindKey(header, i))) + headerMain[i] + '\''
     
-    headerMain.insert(0, "`PlayerPosition`")
-    headerMain.insert(0, "`PlayerName`")
+    headerMain.insert(0, "'PlayerPosition'")
+    headerMain.insert(0, "'PlayerName'")
     # print(','.join(headerMain))
 
     positionHeaders[playerPosition] = ','.join(headerMain)
     fileToWrite = open('tableInsert.csv', 'a+')
     InsertIntoTable =  'INSERT INTO NFLTABLEDATA ('  + str(','.join(headerMain)) + ') VALUES \n'
-    # print(InsertIntoTable)
-    # input()
     fileToWrite.write(InsertIntoTable) 
-    
-    
+        
     # Body of the Gamelog
     playerGameLogDataBody = playerGameLogData.find('tbody')
     for eachTD in playerGameLogDataBody.findAll('tr'):
-        playerData =  '`' + player + '`'  + ',' + '`' +  playerPosition + '`' +  ','
+        playerData =  '\'' + player + '\''  + ',' + '\'' +  playerPosition + '\'' +  ','
         count = 0
-        playerData = playerData + '`' + str(count) + '`' 
+        playerData = playerData + '\'' + str(count) + '\'' 
         for each in eachTD.findAll('td'):
-            playerData = playerData + ',' + '`' + ClearSpecialCharacters(each.text) + '`'
-
-        # print(playerData)
+            playerData = playerData + ',' + '\'' + ClearSpecialCharacters(each.text) + '\''
+            
         playerData = '(' + playerData + '), \n'
         fileToWrite.write(playerData)
 
         count += 1
     fileToWrite.write(';')
     fileToWrite.close()
-    # input()
     return 0
 
 ExtractTeams()

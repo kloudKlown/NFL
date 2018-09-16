@@ -1,0 +1,64 @@
+Starting Jedi Python language engine.
+
+Linter 'pylint' is not installed. Please install it or select another linter".
+Error: Module 'pylint' not installed.
+##########Linting Output - pylint##########
+************* Module NFL_DataStream
+15,0,warning,W1401:Anomalous backslash in string: '\.'. String constant might be missing an r prefix.
+15,0,warning,W1401:Anomalous backslash in string: '\s'. String constant might be missing an r prefix.
+
+-----------------------------------
+Your code has been rated at 9.81/10
+
+##########Linting Output - pylint##########
+************* Module NFL_DataStream
+15,0,warning,W1401:Anomalous backslash in string: '\.'. String constant might be missing an r prefix.
+15,0,warning,W1401:Anomalous backslash in string: '\s'. String constant might be missing an r prefix.
+
+------------------------------------------------------------------
+Your code has been rated at 9.81/10 (previous run: 9.81/10, +0.00)
+
+##########Linting Output - pylint##########
+************* Module NFL_DataStream
+15,0,warning,W1401:Anomalous backslash in string: '\.'. String constant might be missing an r prefix.
+15,0,warning,W1401:Anomalous backslash in string: '\s'. String constant might be missing an r prefix.
+
+------------------------------------------------------------------
+Your code has been rated at 9.81/10 (previous run: 9.81/10, +0.00)
+
+##########Linting Output - pylint##########
+************* Module NFL_DataStream
+15,0,warning,W1401:Anomalous backslash in string: '\.'. String constant might be missing an r prefix.
+15,0,warning,W1401:Anomalous backslash in string: '\s'. String constant might be missing an r prefix.
+##########Linting Output - pylint##########
+************* Module NFL_DataStream
+15,0,warning,W1401:Anomalous backslash in string: '\.'. String constant might be missing an r prefix.
+15,0,warning,W1401:Anomalous backslash in string: '\s'. String constant might be missing an r prefix.
+
+------------------------------------------------------------------
+Your code has been rated at 9.81/10 (previous run: 9.81/10, +0.00)
+
+##########Linting Output - pylint##########
+************* Module NFL_DataStream
+15,0,warning,W1401:Anomalous backslash in string: '\.'. String constant might be missing an r prefix.
+15,0,warning,W1401:Anomalous backslash in string: '\s'. String constant might be missing an r prefix.
+
+------------------------------------------------------------------
+Your code has been rated at 9.81/10 (previous run: 9.81/10, +0.00)
+
+##########Linting Output - pylint##########
+************* Module NFL_DataStream
+15,0,warning,W1401:Anomalous backslash in string: '\.'. String constant might be missing an r prefix.
+15,0,warning,W1401:Anomalous backslash in string: '\s'. String constant might be missing an r prefix.
+
+------------------------------------------------------------------
+Your code has been rated at 9.81/10 (previous run: 9.81/10, +0.00)
+
+##########Linting Output - pylint##########
+************* Module NFL_DataStream
+15,0,warning,W1401:Anomalous backslash in string: '\.'. String constant might be missing an r prefix.
+15,0,warning,W1401:Anomalous backslash in string: '\s'. String constant might be missing an r prefix.
+
+------------------------------------------------------------------
+Your code has been rated at 9.81/10 (previous run: 9.81/10, +0.00)
+
