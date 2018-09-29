@@ -116,10 +116,10 @@ def ExtractPlayersData(player, playerPosition, playerLink):
 
     # Combine headers
     for i in range(0, len(headerMain)):
-        headerMain[i] = '\'' + str((FindKey(header, i))) + headerMain[i] + '\''
+        headerMain[i] = str((FindKey(header, i))) + headerMain[i]
     
-    headerMain.insert(0, "'PlayerPosition'")
-    headerMain.insert(0, "'PlayerName'")
+    headerMain.insert(0, "PlayerPosition")
+    headerMain.insert(0, "PlayerName")
     # print(','.join(headerMain))
 
     positionHeaders[playerPosition] = ','.join(headerMain)
