@@ -19,7 +19,7 @@ def ClearSpecialCharacters(data):
 
 # Extract team urls and names
 def ExtractTeams():
-    teamData = subprocess.check_output(['curl https://www.pro-football-reference.com/teams/'], shell = True)
+    teamData = subprocess.check_output(['curl', 'https://www.pro-football-reference.com/teams/'], shell = True)
     soup = BeautifulSoup(teamData[10000:], features='html.parser')
     teamDiv = soup.find('div', {'id': 'div_teams_active' })
     teams =  teamDiv.findAll('a')
@@ -32,7 +32,7 @@ def ExtractTeams():
 def ExtractPlayersFromRoster(teamURL, teamName):
     teamURL = 'https://www.pro-football-reference.com' + teamURL + str(YEAR) + '_roster.htm' 
     print(teamURL)
-    teamRoster = subprocess.check_output(['curl ' + teamURL], shell = True)
+    teamRoster = subprocess.check_output(['curl' , teamURL], shell = True)
     soup = BeautifulSoup(teamRoster[10000:], features='html.parser')
     teamDiv = soup.find('div', {'id': 'div_starters' })
     teamPlayers = teamDiv.findAll('tr', {'class': 'full_table'})
@@ -60,7 +60,7 @@ def ExtractPlayersFromRoster(teamURL, teamName):
 def ExtractPlayersData(player, playerPosition, playerLink):
     playerLink = playerLink.split('.')[0]
     playerGameLog = 'https://www.pro-football-reference.com' + playerLink + '/gamelog/2015/'
-    playerGameLog = subprocess.check_output(['curl ' + playerGameLog], shell = True)
+    playerGameLog = subprocess.check_output(['curl' , playerGameLog], shell = True)
     soup = BeautifulSoup(playerGameLog[10000:], features='html.parser')
     playerGameLogData = soup.find('div', {'id': 'div_stats'}) 
 
@@ -116,7 +116,7 @@ def ExtractPlayersData(player, playerPosition, playerLink):
 
     # Combine headers
     for i in range(0, len(headerMain)):
-        headerMain[i] = str((FindKey(header, i))) + headerMain[i]
+        headerMain[i] = str((FindKey(header, i))) + headerMain[i] + ','
     
     headerMain.insert(0, "PlayerPosition")
     headerMain.insert(0, "PlayerName")
