@@ -1,0 +1,17 @@
+library(Hmisc)
+library(corrplot)
+library(brnn)
+library(h2o)
+library(randomForest)
+library(Matrix)
+library(xgboost)
+library(stringdist)
+library(varhandle)
+library(tidyr)
+require(devtools)
+#install_version("DiagrammeR", version = "0.9.0", repos = "http://cran.us.r-project.org")
+require(DiagrammeR)
+
+library(mxnet)
+library(Hmisc)
+

@@ -66,9 +66,12 @@ Scoring2PM nvarchar(100) ,
 oneeight nvarchar(100) ,
 onenine nvarchar(100) ,
 PassingYdsPer nvarchar(100) ,
-PassingCmpPer nvarchar(100)
+PassingCmpPer nvarchar(100),
+ReceivingCtchper nvarchar(100),
+ScoringXPper nvarchar(100),
+ScoringFGper nvarchar(100)
 );
 
 -- drop table NFLTABLEDATA;
 
-select * from NFLTABLEDATA where oneDate like '2017%';
+select cast(oneDate as date) as Date, * from NFLTABLEDATA -- where oneDate like '2018%';
