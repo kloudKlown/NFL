@@ -116,8 +116,8 @@ def ExtractPlayersData(player, playerPosition, playerLink, year):
         for key, value in header.items(): 
             if index <= value:
                 return str(key)
-
-        return header.keys()[-1]
+        print(list(header.keys())[-1])        
+        return list(header.keys())[-1]
 
     # Combine headers
     for i in range(0, len(headerMain)):
